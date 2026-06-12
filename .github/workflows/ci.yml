@@ -13,9 +13,9 @@ jobs:
     ci:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
 
-            - uses: actions/setup-node@v4
+            - uses: actions/setup-node@v5
               with:
                   node-version: 22
                   cache: yarn
@@ -36,7 +36,7 @@ jobs:
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/checkout@v5
 
             - name: Deploy to Vercel (production)
               run: npx vercel deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }}
