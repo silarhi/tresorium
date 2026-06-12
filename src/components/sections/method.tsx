@@ -38,9 +38,9 @@ export function Method() {
                 <Reveal className="mb-[clamp(2.5rem,5vw,4rem)] max-w-[720px]">
                     <Eyebrow>Méthodologie d'intervention</Eyebrow>
                     <h2 className="font-display font-semibold text-[clamp(2rem,4.2vw,3.1rem)] leading-[1.12]">
-                        Une méthode éprouvée,
+                        Une méthode orientée vers l'action,
                         <br />
-                        <em className="font-medium text-gold italic">orientée vers l'action.</em>
+                        <em className="font-medium text-gold italic">rémunérée à la part d'enrichissement.</em>
                     </h2>
                     <p className="mt-5 text-[1.08rem] text-muted-foreground">
                         Sur site, dans nos locaux, en visioconférence ou à distance&nbsp;: chaque mission suit un cadre
@@ -53,8 +53,11 @@ export function Method() {
                         <Reveal key={step.title} delay={index * 120} className="h-full">
                             <Card className="h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_-24px_rgb(10_26_47/25%)]">
                                 <CardContent>
-                                    <span className="mb-4 inline-grid size-10 place-items-center rounded-full border border-gold font-bold font-display text-[1.15rem] text-gold-dark">
-                                        {index + 1}
+                                    <span
+                                        aria-hidden
+                                        className="mb-3 block font-bold font-display text-[2.6rem] text-gold leading-none tracking-[0.06em]"
+                                    >
+                                        {String(index + 1).padStart(2, '0')}
                                     </span>
                                     <h3 className="mb-2 font-display font-semibold text-[1.22rem]">{step.title}</h3>
                                     <p className="text-[0.88rem] text-muted-foreground leading-relaxed">
