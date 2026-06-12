@@ -416,6 +416,11 @@
                     </ul>
                 </div>
                 <form class="contact-form reveal delay-1" id="contact-form">
+                    <!-- Honeypot anti-spam : champ invisible que seuls les robots remplissent -->
+                    <label class="hp-field" aria-hidden="true">
+                        <span>Site web</span>
+                        <input type="text" name="website" tabindex="-1" autocomplete="off" />
+                    </label>
                     <div class="form-row">
                         <label>
                             <span>Nom</span>

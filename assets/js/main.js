@@ -40,12 +40,23 @@ for (const el of document.querySelectorAll('.reveal')) {
     revealObserver.observe(el)
 }
 
-// Formulaire de contact : ouvre le client mail avec la demande pré-remplie
+// Formulaire de contact : envoi via l'API (/api/contact, Vercel + Resend),
+// avec bascule sur le client mail si l'API est indisponible
 const form = document.getElementById('contact-form')
+const CONTACT_EMAIL = 'tresorium.jl@gmail.com'
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault()
-    const data = new FormData(form)
+const showFormNote = (text, isError = false) => {
+    let note = form.querySelector('.form-success')
+    if (!note) {
+        note = document.createElement('p')
+        note.className = 'form-success'
+        form.append(note)
+    }
+    note.classList.toggle('form-error', isError)
+    note.textContent = text
+}
+
+const openMailClient = (data) => {
     const subject = encodeURIComponent(`[Site web] ${data.get('subject')} — ${data.get('company') || data.get('name')}`)
     const body = encodeURIComponent(
         [
@@ -57,14 +68,41 @@ form.addEventListener('submit', (e) => {
             data.get('message') || '',
         ].join('\n')
     )
-    window.location.href = `mailto:tresorium.jl@gmail.com?subject=${subject}&body=${body}`
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`
+    showFormNote(
+        `Votre client de messagerie va s’ouvrir avec votre demande pré-remplie. Vous pouvez aussi nous écrire directement à ${CONTACT_EMAIL}.`
+    )
+}
 
-    if (!form.querySelector('.form-success')) {
-        const note = document.createElement('p')
-        note.className = 'form-success'
-        note.textContent =
-            'Votre client de messagerie va s’ouvrir avec votre demande pré-remplie. Vous pouvez aussi nous écrire directement à tresorium.jl@gmail.com.'
-        form.append(note)
+form.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    const data = new FormData(form)
+    const submitBtn = form.querySelector('button[type="submit"]')
+    submitBtn.disabled = true
+    submitBtn.textContent = 'Envoi en cours…'
+
+    try {
+        const response = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(Object.fromEntries(data.entries())),
+        })
+
+        if (response.ok) {
+            form.reset()
+            showFormNote('Merci ! Votre demande a bien été envoyée. Nous revenons vers vous très rapidement.')
+        } else if (response.status === 400) {
+            const { error } = await response.json()
+            showFormNote(error || 'Veuillez vérifier les champs du formulaire.', true)
+        } else {
+            // API indisponible ou non configurée : on bascule sur le client mail
+            openMailClient(data)
+        }
+    } catch {
+        openMailClient(data)
+    } finally {
+        submitBtn.disabled = false
+        submitBtn.textContent = 'Envoyer ma demande'
     }
 })
 

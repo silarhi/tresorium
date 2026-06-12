@@ -918,6 +918,19 @@ h2 em {
     color: var(--ink);
 }
 
+.form-error {
+    background: rgba(176, 58, 46, 0.08);
+    border-color: rgba(176, 58, 46, 0.4);
+}
+
+.hp-field {
+    position: absolute !important;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
 /* ---------- Footer ---------- */
 .site-footer {
     background: var(--navy-950);
