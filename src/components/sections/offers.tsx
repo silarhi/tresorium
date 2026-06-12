@@ -7,9 +7,10 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 
 type Price = {
+    label: string
     prefix?: string
     amount: string
-    unit: string
+    note: string
 }
 
 type Mode = {
@@ -32,8 +33,8 @@ const MODES: Mode[] = [
             'Tarif dégressif sur devis en fonction du projet',
         ],
         prices: [
-            { amount: '200 €', unit: 'HT / heure' },
-            { amount: '890 €', unit: 'HT / jour' },
+            { label: "À l'heure", amount: '200', note: 'HT' },
+            { label: 'À la journée', amount: '890', note: 'HT' },
         ],
     },
     {
@@ -46,7 +47,7 @@ const MODES: Mode[] = [
             'Identification des leviers de rentabilité',
             "Plan d'action proposé, mesurable et applicable",
         ],
-        prices: [{ prefix: 'à partir de', amount: '1 490 €', unit: 'HT' }],
+        prices: [{ label: 'Forfait audit', prefix: 'à partir de', amount: '1 490', note: 'HT' }],
     },
 ]
 
@@ -112,22 +113,32 @@ export function Offers() {
                                             </li>
                                         ))}
                                     </ul>
-                                    <div className="mt-6 flex flex-wrap gap-x-12 gap-y-3 border-t pt-5">
+                                    <div className="mt-6 flex flex-wrap gap-3 border-t pt-5">
                                         {mode.prices.map((price) => (
-                                            <p
-                                                key={price.unit}
-                                                className="font-bold text-[1.7rem] text-navy-800 leading-[1.1] tracking-tight"
+                                            <div
+                                                key={price.label}
+                                                className="min-w-[11rem] flex-1 rounded-md border border-gold/25 bg-secondary/70 px-5 py-4"
                                             >
-                                                {price.prefix && (
-                                                    <span className="font-medium text-[0.82rem] text-muted-foreground tracking-normal">
-                                                        {price.prefix}{' '}
+                                                <p className="font-semibold text-[0.7rem] text-gold-dark uppercase tracking-[0.14em]">
+                                                    {price.label}
+                                                </p>
+                                                <p className="mt-1.5 flex flex-wrap items-baseline gap-x-1.5 text-navy-800">
+                                                    {price.prefix && (
+                                                        <span className="font-medium text-[0.82rem] text-muted-foreground">
+                                                            {price.prefix}
+                                                        </span>
+                                                    )}
+                                                    <span className="font-bold text-[2rem] leading-none tracking-tight">
+                                                        {price.amount}
                                                     </span>
-                                                )}
-                                                {price.amount}{' '}
-                                                <small className="font-medium text-[0.82rem] text-muted-foreground tracking-normal">
-                                                    {price.unit}
-                                                </small>
-                                            </p>
+                                                    <span className="font-bold text-[1.25rem] text-gold leading-none">
+                                                        €
+                                                    </span>
+                                                    <span className="font-medium text-[0.82rem] text-muted-foreground">
+                                                        {price.note}
+                                                    </span>
+                                                </p>
+                                            </div>
                                         ))}
                                     </div>
                                 </CardContent>

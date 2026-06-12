@@ -83,8 +83,6 @@ Variables : `RESEND_API_KEY` (requise), `CONTACT_TO` (destinataire), `CONTACT_FR
 
 ## À remplacer avant mise en ligne définitive
 
-- [ ] **Témoignages** : fictifs, rédigés à titre illustratif —
-      `src/components/sections/testimonials.tsx`.
 - [ ] **Mentions légales / politique de confidentialité** : liens placeholder du footer.
 - [ ] **Domaine + OG image** : ajouter `metadataBase`, `og:image` et le domaine
       personnalisé une fois connus.

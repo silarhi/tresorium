@@ -3,22 +3,21 @@ import { Eyebrow } from '@/components/eyebrow'
 import { Reveal } from '@/components/reveal'
 import { Card, CardContent } from '@/components/ui/card'
 
-// TODO : remplacer par de vrais retours clients avant mise en ligne définitive
 const TESTIMONIALS = [
     {
-        quote: '« Nous avons retrouvé une visibilité complète sur notre trésorerie. Les décisions importantes sont préparées, chiffrées, sécurisées : nous avançons sereinement. »',
+        quote: '« Une clarté financière indispensable pour une startup en forte croissance. Jean-Luc et son équipe parlent le langage des entrepreneurs. »',
+        author: 'Fondateur',
+        company: 'Startup en forte croissance',
+    },
+    {
+        quote: "« L'accompagnement de TRESORIUM a été décisif dans notre phase de restructuration. Leur vision stratégique dépasse de loin la simple analyse comptable. »",
         author: 'Dirigeant',
-        company: 'PME industrielle · 40 salariés',
+        company: 'Entreprise en restructuration',
     },
     {
-        quote: "« L'audit a mis en évidence des leviers de rentabilité que nous ne voyions plus. Le plan d'action s'est financé dès les premiers mois. »",
-        author: 'Fondatrice',
-        company: 'Société de services en croissance',
-    },
-    {
-        quote: '« Une équipe disponible et réactive, présente à chaque étape clé : banques, investissements, recrutements. Un véritable partenaire de confiance. »',
-        author: 'Gérant',
-        company: 'Entreprise du bâtiment',
+        quote: '« Pour mes investissements immobiliers complexes, la rigueur technique de TRESORIUM est devenue mon meilleur atout stratégique. »',
+        author: 'Investisseur',
+        company: 'Patrimoine immobilier',
     },
 ]
 
