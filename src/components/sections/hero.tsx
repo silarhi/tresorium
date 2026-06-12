@@ -17,16 +17,16 @@ export function Hero() {
                     </Reveal>
                     <Reveal delay={120}>
                         <h1 className="mb-6 font-display font-semibold text-[clamp(2.6rem,6.2vw,4.4rem)] text-white leading-[1.12] tracking-[-0.01em]">
-                            La finance au service
+                            La trésorerie au service
                             <br />
                             <em className="font-medium text-gold">de votre stratégie.</em>
                         </h1>
                     </Reveal>
                     <Reveal delay={240}>
                         <p className="mb-10 max-w-[620px] text-[clamp(1.05rem,1.6vw,1.22rem)] text-muted-foreground leading-relaxed">
-                            TRESORIUM accompagne les dirigeants dans leurs décisions les plus importantes&nbsp;:
-                            pilotage de la performance, trésorerie, financement et développement. Pour que chaque
-                            décision financière devienne un levier de croissance durable.
+                            TRESORIUM accompagne les dirigeants dans leurs décisions les plus importantes&nbsp;: la
+                            trésorerie, les financements, le développement et le pilotage de la performance. Pour que
+                            chaque décision financière devienne un levier de croissance durable.
                         </p>
                     </Reveal>
                     <Reveal delay={360}>
