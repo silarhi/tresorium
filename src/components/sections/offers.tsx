@@ -6,12 +6,26 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 
-const MODES = [
+type Price = {
+    prefix?: string
+    amount: string
+    unit: string
+}
+
+type Mode = {
+    label: string
+    title: string
+    description: string
+    features: string[]
+    prices: Price[]
+}
+
+const MODES: Mode[] = [
     {
         label: 'Formule 01',
         title: 'Accompagnement au temps passé',
         description:
-            'Conseil stratégique, optimisation financière, direction financière externalisée, relations bancaires, business plan… Nous intervenons à la carte, au rythme de vos besoins.',
+            'Consolidation de trésorerie, conseil stratégique de croissance, optimisation financière… Nous intervenons à la carte, au rythme de vos besoins.',
         features: [
             'Interventions ponctuelles ou récurrentes',
             'Dans vos locaux, les nôtres ou à distance',
@@ -32,7 +46,7 @@ const MODES = [
             'Identification des leviers de rentabilité',
             "Plan d'action proposé, mesurable et applicable",
         ],
-        prices: [{ amount: '890 €', unit: 'HT' }],
+        prices: [{ prefix: 'à partir de', amount: '1 490 €', unit: 'HT' }],
     },
 ]
 
@@ -102,10 +116,15 @@ export function Offers() {
                                         {mode.prices.map((price) => (
                                             <p
                                                 key={price.unit}
-                                                className="font-bold font-display text-[2.1rem] text-navy-800 leading-[1.1]"
+                                                className="font-bold text-[1.7rem] text-navy-800 leading-[1.1] tracking-tight"
                                             >
+                                                {price.prefix && (
+                                                    <span className="font-medium text-[0.82rem] text-muted-foreground tracking-normal">
+                                                        {price.prefix}{' '}
+                                                    </span>
+                                                )}
                                                 {price.amount}{' '}
-                                                <small className="font-medium font-sans text-[0.82rem] text-muted-foreground">
+                                                <small className="font-medium text-[0.82rem] text-muted-foreground tracking-normal">
                                                     {price.unit}
                                                 </small>
                                             </p>
