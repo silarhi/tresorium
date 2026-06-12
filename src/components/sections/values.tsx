@@ -7,7 +7,7 @@ const VALUES = [
     {
         title: 'Excellence',
         description:
-            'Nous recherchons la rigueur intellectuelle et la qualité dans chacune de nos interventions. Nos analyses doivent être fiables, objectives et utiles à la prise de décision.',
+            'Nous recherchons la rigueur intellectuelle et la qualité dans chacune de nos interventions. Nos analyses doivent être fiables, objectives, réalisables et utiles à la prise de décision.',
     },
     {
         title: 'Indépendance',
@@ -52,7 +52,10 @@ export function Values() {
                         <Reveal key={value.title} delay={(index % 3) * 120}>
                             <Card className="group relative h-full overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_60px_-24px_rgb(10_26_47/25%)]">
                                 <CardContent>
-                                    <span className="font-display font-semibold text-[0.95rem] text-gold tracking-[0.15em]">
+                                    <span
+                                        aria-hidden
+                                        className="block font-bold font-display text-[2.6rem] text-gold leading-none tracking-[0.06em]"
+                                    >
                                         {String(index + 1).padStart(2, '0')}
                                     </span>
                                     <h3 className="mt-3 mb-2.5 font-display font-semibold text-[1.45rem]">

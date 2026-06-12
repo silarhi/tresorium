@@ -5,12 +5,11 @@ import { Reveal } from '@/components/reveal'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 const MISSIONS = [
+    'Consolider, sécuriser et anticiper les besoins de trésorerie',
     'Élaborer une vision financière fiable et prospective',
     'Optimiser la rentabilité et les performances économiques',
-    'Sécuriser et anticiper les besoins de trésorerie',
     "Structurer les projets de développement et d'investissement",
-    'Renforcer les relations bancaires et financières',
-    'Accompagner croissance, transmission et restructuration',
+    'Accompagner la croissance, la transmission et la restructuration',
     'Fournir des indicateurs simples, pertinents et orientés action',
 ]
 
@@ -48,8 +47,8 @@ export function Vision() {
                                 </p>
                                 <p>
                                     Nous voulons faire de TRESORIUM une référence du conseil indépendant en stratégie
-                                    financière et en pilotage de la performance, reconnue pour son exigence, sa
-                                    proximité et sa capacité à accompagner durablement les dirigeants.
+                                    financière, stratégie de trésorerie et pilotage de la performance, reconnue pour son
+                                    exigence, sa proximité et sa capacité à accompagner durablement les dirigeants.
                                 </p>
                             </CardContent>
                         </Card>
@@ -65,7 +64,8 @@ export function Vision() {
                             <CardContent className="text-muted-foreground leading-relaxed">
                                 <p>
                                     Apporter aux dirigeants les outils, les analyses et les méthodes qui leur permettent
-                                    de développer leur entreprise avec sérénité. Concrètement&nbsp;:
+                                    de consolider leur trésorerie, de développer leur entreprise avec sérénité.
+                                    Concrètement&nbsp;:
                                 </p>
                                 <ul className="mt-5 space-y-2.5">
                                     {MISSIONS.map((mission) => (
