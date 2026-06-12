@@ -38,6 +38,8 @@ const jsonLd = {
     '@type': 'ProfessionalService',
     name: 'TRESORIUM',
     url: 'https://tresorium-invest.com',
+    logo: 'https://tresorium-invest.com/logo-square.png',
+    image: 'https://tresorium-invest.com/logo-wordmark.png',
     description:
         'Cabinet indépendant de conseil en stratégie de développement et optimisation financière de trésorerie. Premier rendez-vous gratuit.',
     slogan: 'La finance au service de la stratégie.',
