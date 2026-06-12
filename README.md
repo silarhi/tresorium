@@ -4,7 +4,7 @@ Site vitrine de TRESORIUM, cabinet indépendant de conseil en stratégie de dév
 et optimisation financière de trésorerie (fondateur : Jean-Luc Gimeno, Toulouse).
 
 **Signature** : _La finance au service de la stratégie._
-**🌐 Production** : <https://tresorium.vercel.app>
+**🌐 Production** : <https://tresorium-invest.com> (alias : <https://tresorium.vercel.app>)
 
 ## Stack
 
@@ -60,16 +60,21 @@ Le formulaire poste sur `/api/contact` (route handler Next.js) qui envoie l'e-ma
 configurée (HTTP 503), le site bascule automatiquement sur l'ouverture du client mail du
 visiteur — le formulaire n'est donc jamais cassé.
 
-Pour activer l'envoi :
+**État actuel** : `RESEND_API_KEY` est configurée (compte Resend de Guillaume) et le
+formulaire fonctionne. Le compte étant en mode test (pas de domaine vérifié), Resend ne
+délivre qu'à l'adresse du compte : `CONTACT_TO=guillaume@silarhi.fr` est donc défini sur
+Vercel — les demandes arrivent chez Guillaume, à transférer au client.
 
-1. Créer un compte Resend **avec l'adresse `tresorium.jl@gmail.com`** (sans domaine
-   vérifié, Resend ne délivre qu'à l'adresse du compte).
-2. Générer une clé API puis : `npx vercel env add RESEND_API_KEY production`
-3. Re-déployer : `npx vercel deploy --prod`
+**Pour livrer directement à `tresorium.jl@gmail.com`** :
 
-Variables optionnelles : `CONTACT_TO` (destinataire, défaut `tresorium.jl@gmail.com`),
-`CONTACT_FROM` (expéditeur, défaut `onboarding@resend.dev`). Anti-spam : honeypot côté
-client + validation côté serveur.
+1. Vérifier le domaine `tresorium-invest.com` sur <https://resend.com/domains>
+   (ajout d'enregistrements DNS SPF/DKIM).
+2. Sur Vercel : `CONTACT_FROM="TRESORIUM <contact@tresorium-invest.com>"` et supprimer
+   `CONTACT_TO` (le défaut `tresorium.jl@gmail.com` reprendra la main).
+3. Re-déployer.
+
+Variables : `RESEND_API_KEY` (requise), `CONTACT_TO` (destinataire), `CONTACT_FROM`
+(expéditeur). Anti-spam : honeypot côté client + validation côté serveur.
 
 ## Coordonnées
 
