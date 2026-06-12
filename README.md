@@ -26,22 +26,43 @@ python3 -m http.server 8742
 
 ## Déploiement (Vercel)
 
-Site statique, aucun build requis. Deux options :
-
-**Via le CLI :**
+**🌐 En ligne : <https://tresorium.vercel.app>** (projet `tresorium`, compte
+`guillaume-sainthillier`). Un domaine personnalisé pourra être attaché gratuitement dans
+les réglages du projet (Settings → Domains).
 
 ```bash
-vercel          # premier déploiement (preview) — répondre "Other" / pas de build / output "."
-vercel --prod   # déploiement en production
+npx vercel deploy --prod   # re-déployer en production
+npx vercel deploy          # déploiement de preview (URL protégée par auth Vercel)
 ```
-
-**Via l'import GitHub :** pousser le repo sur GitHub puis l'importer sur vercel.com avec
-les réglages : Framework Preset `Other`, Build Command vide, Output Directory `.` (racine).
 
 La configuration [vercel.json](vercel.json) gère les URLs propres (`cleanUrls`), le cache
 des assets (1 jour + `stale-while-revalidate`) et les headers de sécurité. `404.html` est
 servie automatiquement par Vercel pour les pages introuvables, `robots.txt` autorise
 l'indexation.
+
+> ⚠️ Le plan Hobby de Vercel est officiellement réservé à un usage non commercial.
+> Pour un site client en production : plan Pro, ou alternative gratuite compatible
+> usage commercial (Cloudflare Pages).
+
+## Formulaire de contact (API)
+
+Le formulaire poste sur `/api/contact` ([api/contact.js](api/contact.js)), une fonction
+serverless Vercel qui envoie l'e-mail via [Resend](https://resend.com) (gratuit :
+3 000 e-mails/mois). Tant que l'API n'est pas configurée (HTTP 503), le site bascule
+automatiquement sur l'ouverture du client mail du visiteur — le formulaire n'est donc
+jamais cassé.
+
+Pour activer l'envoi :
+
+1. Créer un compte Resend **avec l'adresse `tresorium.jl@gmail.com`** (sans domaine
+   vérifié, Resend ne délivre qu'à l'adresse du compte).
+2. Générer une clé API puis : `npx vercel env add RESEND_API_KEY production`
+3. Re-déployer : `npx vercel deploy --prod`
+
+Variables optionnelles : `CONTACT_TO` (destinataire, défaut `tresorium.jl@gmail.com`),
+`CONTACT_FROM` (expéditeur, défaut `onboarding@resend.dev` — à remplacer par une adresse
+du domaine une fois celui-ci vérifié chez Resend, ce qui lèvera aussi la restriction de
+destinataire). Anti-spam : champ honeypot côté client + validation côté serveur.
 
 ## Coordonnées
 
