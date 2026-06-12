@@ -78,8 +78,6 @@ client + validation côté serveur.
 
 ## À remplacer avant mise en ligne définitive
 
-- [ ] **Photo du fondateur** : placeholder dans `src/components/sections/founder.tsx`
-      (format 4:5).
 - [ ] **Témoignages** : fictifs, rédigés à titre illustratif —
       `src/components/sections/testimonials.tsx`.
 - [ ] **Mentions légales / politique de confidentialité** : liens placeholder du footer.

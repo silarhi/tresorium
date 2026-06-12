@@ -1,4 +1,5 @@
-import { UserRound } from 'lucide-react'
+import Image from 'next/image'
+import portrait from '@/assets/jean-luc-gimeno.jpg'
 import { Container } from '@/components/container'
 import { Eyebrow } from '@/components/eyebrow'
 import { Reveal } from '@/components/reveal'
@@ -15,13 +16,14 @@ export function Founder() {
                         <em className="font-medium text-gold">une opportunité perdue.</em>
                     </h2>
 
-                    {/* TODO : remplacer par le portrait de Jean-Luc Gimeno (format 4:5) */}
-                    <figure className="mt-9 flex aspect-4/5 max-w-[340px] flex-col items-center justify-center gap-4 rounded-md border border-gold/35 bg-linear-160 from-navy-800 to-navy-950 text-muted-foreground">
-                        <UserRound className="size-16 text-gold opacity-80" strokeWidth={1.4} aria-hidden="true" />
-                        <figcaption className="text-center font-medium text-[0.78rem] uppercase leading-[1.8] tracking-[0.12em]">
-                            Portrait de Jean-Luc Gimeno
-                            <br />— photo à venir —
-                        </figcaption>
+                    <figure className="mt-9 max-w-[340px] overflow-hidden rounded-md border border-gold/35">
+                        <Image
+                            src={portrait}
+                            alt="Jean-Luc Gimeno, président fondateur de TRESORIUM"
+                            placeholder="blur"
+                            sizes="(max-width: 768px) 90vw, 340px"
+                            className="aspect-4/5 w-full object-cover object-top"
+                        />
                     </figure>
 
                     <div className="mt-9 border-t pt-7">
