@@ -1,44 +1,52 @@
 # TRESORIUM — Site vitrine
 
-Site vitrine statique pour TRESORIUM, cabinet indépendant de conseil en stratégie financière
-et Direction Financière externalisée (fondateur : Jean-Luc Gimeno).
+Site vitrine de TRESORIUM, cabinet indépendant de conseil en stratégie de développement
+et optimisation financière de trésorerie (fondateur : Jean-Luc Gimeno, Toulouse).
 
 **Signature** : _La finance au service de la stratégie._
-**Persona** : sécurité, sérénité, rentabilité, disponibilité de l'équipe.
+**🌐 Production** : <https://tresorium.vercel.app>
 
 ## Stack
 
-Site 100 % statique, sans build : HTML + CSS + JS vanilla.
+- [Next.js 16](https://nextjs.org) (App Router, Turbopack) + React 19 + TypeScript
+- [Tailwind CSS v4](https://tailwindcss.com) + [shadcn/ui](https://ui.shadcn.com) (Radix)
+- [Biome](https://biomejs.dev) (lint + format)
+- Polices : Cormorant Garamond (display) + Inter (texte) via `next/font`
 
 ```
-index.html              # Page unique (one-page, ancres par section)
-assets/css/style.css    # Design system (navy/or, Cormorant Garamond + Inter)
-assets/js/main.js       # Header sticky, menu mobile, reveal au scroll, formulaire mailto
-assets/img/favicon.svg
+src/
+  app/
+    layout.tsx            # Fonts, metadata, JSON-LD ProfessionalService
+    page.tsx              # Assemblage des sections
+    globals.css           # Design tokens (navy/or) clair + sombre, reveal
+    not-found.tsx         # 404 brandée
+    robots.ts             # robots.txt généré
+    api/contact/route.ts  # API formulaire (Resend)
+  components/
+    ui/                   # Composants shadcn (button, card, input, select…)
+    sections/             # Header, Hero, Founder, Vision, Values, Offers,
+                          # Method, Testimonials, Quote, Contact(+Form), Footer
+    reveal.tsx            # Animation d'apparition au scroll
+    container.tsx, eyebrow.tsx, brand.tsx
 ```
 
 ## Développement
 
 ```bash
-python3 -m http.server 8742
-# → http://localhost:8742
+yarn install
+yarn dev        # http://localhost:3000
+yarn build      # build de production
+yarn lint       # biome check --write
 ```
 
 ## Déploiement (Vercel)
 
-**🌐 En ligne : <https://tresorium.vercel.app>** (projet `tresorium`, compte
-`guillaume-sainthillier`). Un domaine personnalisé pourra être attaché gratuitement dans
-les réglages du projet (Settings → Domains).
+Projet Vercel `tresorium` (compte `guillaume-sainthillier`). Si le repo GitHub est
+connecté au projet Vercel, chaque push sur `main` déploie en production.
 
 ```bash
-npx vercel deploy --prod   # re-déployer en production
-npx vercel deploy          # déploiement de preview (URL protégée par auth Vercel)
+npx vercel deploy --prod   # déploiement manuel
 ```
-
-La configuration [vercel.json](vercel.json) gère les URLs propres (`cleanUrls`), le cache
-des assets (1 jour + `stale-while-revalidate`) et les headers de sécurité. `404.html` est
-servie automatiquement par Vercel pour les pages introuvables, `robots.txt` autorise
-l'indexation.
 
 > ⚠️ Le plan Hobby de Vercel est officiellement réservé à un usage non commercial.
 > Pour un site client en production : plan Pro, ou alternative gratuite compatible
@@ -46,11 +54,10 @@ l'indexation.
 
 ## Formulaire de contact (API)
 
-Le formulaire poste sur `/api/contact` ([api/contact.js](api/contact.js)), une fonction
-serverless Vercel qui envoie l'e-mail via [Resend](https://resend.com) (gratuit :
-3 000 e-mails/mois). Tant que l'API n'est pas configurée (HTTP 503), le site bascule
-automatiquement sur l'ouverture du client mail du visiteur — le formulaire n'est donc
-jamais cassé.
+Le formulaire poste sur `/api/contact` (route handler Next.js) qui envoie l'e-mail via
+[Resend](https://resend.com) (gratuit : 3 000 e-mails/mois). Tant que l'API n'est pas
+configurée (HTTP 503), le site bascule automatiquement sur l'ouverture du client mail du
+visiteur — le formulaire n'est donc jamais cassé.
 
 Pour activer l'envoi :
 
@@ -60,29 +67,20 @@ Pour activer l'envoi :
 3. Re-déployer : `npx vercel deploy --prod`
 
 Variables optionnelles : `CONTACT_TO` (destinataire, défaut `tresorium.jl@gmail.com`),
-`CONTACT_FROM` (expéditeur, défaut `onboarding@resend.dev` — à remplacer par une adresse
-du domaine une fois celui-ci vérifié chez Resend, ce qui lèvera aussi la restriction de
-destinataire). Anti-spam : champ honeypot côté client + validation côté serveur.
+`CONTACT_FROM` (expéditeur, défaut `onboarding@resend.dev`). Anti-spam : honeypot côté
+client + validation côté serveur.
 
 ## Coordonnées
 
-- E-mail : `tresorium.jl@gmail.com` (présent dans `index.html`, `main.js` et le JSON-LD)
-- Téléphone : 06 41 33 50 34
+- E-mail : `tresorium.jl@gmail.com` · Téléphone : 06 41 33 50 34
 - Adresse : 6 place Wilson, 31000 Toulouse, France
 
-## À remplacer avant mise en ligne
+## À remplacer avant mise en ligne définitive
 
-- [ ] **Photo du fondateur** : placeholder dans la section « Mot du fondateur » — remplacer
-      par le portrait de Jean-Luc Gimeno (format 4:5).
-- [ ] **Témoignages** : rédigés à titre illustratif — à remplacer par de vrais retours clients.
-- [ ] **Formulaire de contact** : actuellement un fallback `mailto:`. Brancher un vrai backend
-      (Formspree, Netlify Forms, ou endpoint maison) si souhaité.
-- [ ] **Mentions légales / politique de confidentialité** : liens placeholder dans le footer.
-- [ ] **Domaine + OG image** : ajouter `og:url` / `og:image` une fois le domaine connu.
-
-## Contenu
-
-Sections : hero (1er RDV gratuit), mot du fondateur (+ photo), vision & mission, 6 valeurs,
-offres — premier rendez-vous gratuit puis 2 formules : accompagnement au temps passé
-(200 € HT/heure ou 890 € HT/jour, dégressif sur devis selon le projet) et audit & plan
-d'action (890 € HT) —, méthodologie en 5 étapes, témoignages, citation d'engagement, contact.
+- [ ] **Photo du fondateur** : placeholder dans `src/components/sections/founder.tsx`
+      (format 4:5).
+- [ ] **Témoignages** : fictifs, rédigés à titre illustratif —
+      `src/components/sections/testimonials.tsx`.
+- [ ] **Mentions légales / politique de confidentialité** : liens placeholder du footer.
+- [ ] **Domaine + OG image** : ajouter `metadataBase`, `og:image` et le domaine
+      personnalisé une fois connus.

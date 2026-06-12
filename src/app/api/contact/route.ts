@@ -1,3 +1,5 @@
+import { NextResponse } from 'next/server'
+
 // API de contact — envoie la demande par e-mail via Resend (https://resend.com)
 //
 // Variables d'environnement (Vercel → Settings → Environment Variables) :
@@ -9,44 +11,58 @@
 const escapeHtml = (value = '') =>
     String(value).replace(
         /[&<>"']/g,
-        (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]
+        (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char] as string
     )
 
-module.exports = async (req, res) => {
-    if (req.method !== 'POST') {
-        res.setHeader('Allow', 'POST')
-        return res.status(405).json({ error: 'Méthode non autorisée' })
+type ContactPayload = {
+    name?: string
+    company?: string
+    email?: string
+    phone?: string
+    subject?: string
+    message?: string
+    website?: string
+}
+
+export async function POST(request: Request) {
+    let payload: ContactPayload
+    try {
+        payload = (await request.json()) as ContactPayload
+    } catch {
+        return NextResponse.json({ error: 'Requête invalide' }, { status: 400 })
     }
 
-    const { name, company, email, phone, subject, message, website } = req.body || {}
+    const { name, company, email, phone, subject, message, website } = payload
 
     // Honeypot : un humain ne remplit jamais ce champ
     if (website) {
-        return res.status(200).json({ ok: true })
+        return NextResponse.json({ ok: true })
     }
 
     if (!name || !email) {
-        return res.status(400).json({ error: 'Le nom et l’e-mail sont requis' })
+        return NextResponse.json({ error: 'Le nom et l’e-mail sont requis' }, { status: 400 })
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        return res.status(400).json({ error: 'Adresse e-mail invalide' })
+        return NextResponse.json({ error: 'Adresse e-mail invalide' }, { status: 400 })
     }
 
     const apiKey = process.env.RESEND_API_KEY
     if (!apiKey) {
-        return res.status(503).json({ error: 'Service e-mail non configuré' })
+        return NextResponse.json({ error: 'Service e-mail non configuré' }, { status: 503 })
     }
 
     const to = process.env.CONTACT_TO || 'tresorium.jl@gmail.com'
     const from = process.env.CONTACT_FROM || 'TRESORIUM <onboarding@resend.dev>'
 
-    const rows = [
-        ['Nom', name],
-        ['Société', company],
-        ['E-mail', email],
-        ['Téléphone', phone],
-        ['Besoin', subject],
-    ]
+    const rows = (
+        [
+            ['Nom', name],
+            ['Société', company],
+            ['E-mail', email],
+            ['Téléphone', phone],
+            ['Besoin', subject],
+        ] as const
+    )
         .filter(([, value]) => value)
         .map(
             ([label, value]) =>
@@ -80,8 +96,8 @@ module.exports = async (req, res) => {
     if (!response.ok) {
         const detail = await response.text()
         console.error('Resend error:', response.status, detail)
-        return res.status(502).json({ error: 'L’envoi de l’e-mail a échoué' })
+        return NextResponse.json({ error: 'L’envoi de l’e-mail a échoué' }, { status: 502 })
     }
 
-    return res.status(200).json({ ok: true })
+    return NextResponse.json({ ok: true })
 }
