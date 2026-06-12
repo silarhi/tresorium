@@ -54,7 +54,7 @@ export function Founder() {
                         objectif et un accompagnement personnalisé.
                     </p>
                     <blockquote className="mt-8 rounded-r-md border-gold border-l-[3px] bg-secondary px-8 py-6 font-display text-[1.35rem] text-foreground italic leading-[1.45]">
-                        Notre engagement est simple&nbsp;: transformer la finance en un outil de développement au
+                        Notre engagement est simple&nbsp;: transformer la trésorerie en un outil de développement au
                         service de votre stratégie.
                     </blockquote>
                 </Reveal>
