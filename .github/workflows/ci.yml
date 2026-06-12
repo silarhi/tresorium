@@ -1,13 +1,12 @@
 name: CI
 
+# Le déploiement est géré par l'intégration git Vercel (auto-deploy sur push main,
+# previews sur PR) — ce workflow ne fait que valider le code.
+
 on:
     push:
         branches: [main]
     pull_request:
-
-env:
-    VERCEL_ORG_ID: team_vNl60UnI3M9U1Zv2gcmWhmMc
-    VERCEL_PROJECT_ID: prj_VTI8OjSiJTyRrnaSL4tBungrKVP3
 
 jobs:
     ci:
@@ -27,16 +26,3 @@ jobs:
 
             - name: Build
               run: yarn build
-
-    deploy:
-        # Déploiement production via le CLI Vercel (la connexion git Vercel
-        # n'est pas disponible pour un repo privé d'organisation sur le plan Hobby).
-        # Requiert le secret VERCEL_TOKEN (https://vercel.com/account/tokens).
-        needs: ci
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v5
-
-            - name: Deploy to Vercel (production)
-              run: npx vercel deploy --prod --yes --token=${{ secrets.VERCEL_TOKEN }}

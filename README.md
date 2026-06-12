@@ -41,11 +41,12 @@ yarn lint       # biome check --write
 
 ## Déploiement (Vercel)
 
-Projet Vercel `tresorium` (compte `guillaume-sainthillier`). Si le repo GitHub est
-connecté au projet Vercel, chaque push sur `main` déploie en production.
+Projet Vercel `tresorium` (compte `guillaume-sainthillier`), connecté au repo GitHub :
+**chaque push sur `main` déploie en production**, chaque PR génère une preview.
+GitHub Actions ne fait que la validation (Biome + build).
 
 ```bash
-npx vercel deploy --prod   # déploiement manuel
+npx vercel deploy --prod   # déploiement manuel si besoin
 ```
 
 > ⚠️ Le plan Hobby de Vercel est officiellement réservé à un usage non commercial.
