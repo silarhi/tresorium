@@ -1,0 +1,9 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Vercel (créé par `vercel link`)
+.vercel
+
+# Logs
+*.log
