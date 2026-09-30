@@ -1,0 +1,53 @@
+name: 'Continuous Integration'
+
+# Deployment is handled by Vercel's git integration (auto-deploy on push to main,
+# previews on PRs); this workflow only validates the code.
+
+on:
+    pull_request:
+    push:
+        branches:
+            - 'main'
+
+jobs:
+    lint:
+        name: Lint
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v7
+            - name: Setup Node.js
+              uses: actions/setup-node@v7
+              with:
+                  node-version: '24'
+                  cache: 'yarn'
+            - name: Install dependencies
+              run: yarn install --frozen-lockfile
+            - name: Biome
+              run: npx biome ci .
+
+    build:
+        name: Build
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v7
+            - name: Setup Node.js
+              uses: actions/setup-node@v7
+              with:
+                  node-version: '24'
+                  cache: 'yarn'
+            - name: Install dependencies
+              run: yarn install --frozen-lockfile
+            - name: Build
+              run: yarn build
+
+    ci-passed:
+        name: CI passed
+        needs: [lint, build]
+        if: always()
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check that all required jobs succeeded
+              if: contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled')
+              run: exit 1
