@@ -15,7 +15,7 @@ const cormorant = Cormorant_Garamond({
 })
 
 export const metadata: Metadata = {
-    metadataBase: new URL('https://tresorium-invest.com'),
+    metadataBase: new URL('https://www.tresorium-invest.com'),
     title: 'TRESORIUM — La finance au service de la stratégie',
     description:
         'TRESORIUM, cabinet indépendant de conseil en stratégie de développement et optimisation financière de trésorerie. Premier rendez-vous gratuit : nous accompagnons les dirigeants dans leurs décisions les plus importantes.',
@@ -37,9 +37,9 @@ const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
     name: 'TRESORIUM',
-    url: 'https://tresorium-invest.com',
-    logo: 'https://tresorium-invest.com/logo-square.png',
-    image: 'https://tresorium-invest.com/logo-wordmark.png',
+    url: 'https://www.tresorium-invest.com',
+    logo: 'https://www.tresorium-invest.com/logo-square.png',
+    image: 'https://www.tresorium-invest.com/logo-wordmark.png',
     description:
         'Cabinet indépendant de conseil en stratégie de développement et optimisation financière de trésorerie. Premier rendez-vous gratuit.',
     slogan: 'La finance au service de la stratégie.',
