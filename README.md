@@ -1,10 +1,10 @@
 # TRESORIUM — Site vitrine
 
 Site vitrine de TRESORIUM, cabinet indépendant de conseil en stratégie de développement
-et optimisation financière de trésorerie (fondateur : Jean-Luc Gimeno, Toulouse).
+et optimisation financière de trésorerie.
 
 **Signature** : _La finance au service de la stratégie._
-**🌐 Production** : <https://tresorium-invest.com> (alias : <https://tresorium.vercel.app>)
+**🌐 Production** : <https://www.tresorium-invest.com> (l'apex redirige vers `www` ; alias : <https://tresorium.vercel.app>)
 
 ## Stack
 
@@ -21,6 +21,7 @@ src/
     globals.css           # Design tokens (navy/or) clair + sombre, reveal
     not-found.tsx         # 404 brandée
     robots.ts             # robots.txt généré
+    opengraph-image.png   # Image OG (+ icon.png, apple-icon.png)
     api/contact/route.ts  # API formulaire (Resend)
   components/
     ui/                   # Composants shadcn (button, card, input, select…)
@@ -28,6 +29,8 @@ src/
                           # Method, Testimonials, Quote, Contact(+Form), Footer
     reveal.tsx            # Animation d'apparition au scroll
     container.tsx, eyebrow.tsx, brand.tsx
+  assets/                 # Logo, portrait du fondateur
+  lib/utils.ts            # cn()
 ```
 
 ## Développement
@@ -45,9 +48,7 @@ Projet Vercel `tresorium` (compte `guillaume-sainthillier`), connecté au repo G
 **chaque push sur `main` déploie en production**, chaque PR génère une preview.
 GitHub Actions ne fait que la validation (Biome + build).
 
-```bash
-npx vercel deploy --prod   # déploiement manuel si besoin
-```
+Déploiement manuel possible si besoin via la CLI Vercel (`vercel deploy --prod`).
 
 > ⚠️ Le plan Hobby de Vercel est officiellement réservé à un usage non commercial.
 > Pour un site client en production : plan Pro, ou alternative gratuite compatible
@@ -60,29 +61,27 @@ Le formulaire poste sur `/api/contact` (route handler Next.js) qui envoie l'e-ma
 configurée (HTTP 503), le site bascule automatiquement sur l'ouverture du client mail du
 visiteur — le formulaire n'est donc jamais cassé.
 
-**État actuel** : `RESEND_API_KEY` est configurée (compte Resend de Guillaume) et le
-formulaire fonctionne. Le compte étant en mode test (pas de domaine vérifié), Resend ne
-délivre qu'à l'adresse du compte : `CONTACT_TO=guillaume@silarhi.fr` est donc défini sur
-Vercel — les demandes arrivent chez Guillaume, à transférer au client.
+Configuration (Vercel → Settings → Environment Variables) :
 
-**Pour livrer directement à `tresorium.jl@gmail.com`** :
+- `RESEND_API_KEY` (requise) — clé API Resend.
+- `CONTACT_TO` — destinataire des demandes (défaut défini dans
+  `src/app/api/contact/route.ts`).
+- `CONTACT_FROM` — expéditeur (défaut : `onboarding@resend.dev`). Sans domaine vérifié sur
+  Resend, l'envoi n'est délivré qu'à l'adresse du compte Resend : pour livrer au client,
+  vérifier le domaine `tresorium-invest.com` sur <https://resend.com/domains> (DNS SPF/DKIM)
+  puis définir un expéditeur sur ce domaine.
 
-1. Vérifier le domaine `tresorium-invest.com` sur <https://resend.com/domains>
-   (ajout d'enregistrements DNS SPF/DKIM).
-2. Sur Vercel : `CONTACT_FROM="TRESORIUM <contact@tresorium-invest.com>"` et supprimer
-   `CONTACT_TO` (le défaut `tresorium.jl@gmail.com` reprendra la main).
-3. Re-déployer.
+Anti-spam : honeypot côté client + validation côté serveur.
 
-Variables : `RESEND_API_KEY` (requise), `CONTACT_TO` (destinataire), `CONTACT_FROM`
-(expéditeur). Anti-spam : honeypot côté client + validation côté serveur.
+## Coordonnées affichées
 
-## Coordonnées
+Les coordonnées du cabinet (e-mail, téléphone, adresse) sont codées en dur dans :
 
-- E-mail : `tresorium.jl@gmail.com` · Téléphone : 06 41 33 50 34
-- Adresse : 6 place Wilson, 31000 Toulouse, France
+- `src/components/sections/contact.tsx` et `src/components/sections/footer.tsx` (affichage) ;
+- `src/components/sections/contact-form.tsx` (`CONTACT_EMAIL`, repli mailto) ;
+- `src/app/layout.tsx` (JSON-LD `ProfessionalService`).
 
-## À remplacer avant mise en ligne définitive
+## Reste à faire
 
-- [ ] **Mentions légales / politique de confidentialité** : liens placeholder du footer.
-- [ ] **Domaine + OG image** : ajouter `metadataBase`, `og:image` et le domaine
-      personnalisé une fois connus.
+- [ ] **Mentions légales / politique de confidentialité** : liens placeholder du footer
+      (`href="#top"` dans `src/components/sections/footer.tsx`).
