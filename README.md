@@ -4,7 +4,7 @@ Site vitrine de TRESORIUM, cabinet indépendant de conseil en stratégie de dév
 et optimisation financière de trésorerie.
 
 **Signature** : _La finance au service de la stratégie._
-**🌐 Production** : <https://www.tresorium-invest.com> (l'apex redirige vers `www` ; alias : <https://tresorium.vercel.app>)
+**🌐 Production** : <https://www.tresorium-invest.com> (URL canonique ; l’apex redirige vers `www` ; alias : <https://tresorium.vercel.app>)
 
 ## Stack
 
