@@ -36,10 +36,10 @@ src/
 ## Développement
 
 ```bash
-yarn install
-yarn dev        # http://localhost:3000
-yarn build      # build de production
-yarn lint       # biome check --write
+pnpm install
+pnpm dev        # http://localhost:3000
+pnpm build      # build de production
+pnpm lint       # biome check --write
 ```
 
 ## Déploiement (Vercel)
