@@ -1,5 +1,5 @@
 {
-    "$schema": "https://biomejs.dev/schemas/2.5.13/schema.json",
+    "$schema": "https://biomejs.dev/schemas/2.6.2/schema.json",
     "vcs": {
         "enabled": true,
         "clientKind": "git",
@@ -47,6 +47,16 @@
             "source": {
                 "organizeImports": "on"
             }
+        }
+    },
+    "yaml": {
+        "formatter": {
+            "enabled": false
+        }
+    },
+    "markdown": {
+        "formatter": {
+            "enabled": false
         }
     }
 }
